@@ -13,6 +13,7 @@ body {
 :root {
   --bg-primary-color: #1e1e1e;
   --bg-fill-color: #c37a7a;
+  --food-color: #2a8e26;
   --text-primary-color: #dddcdc;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -73,4 +74,8 @@ section .board .block {
 
 .fill {
   background-color: var(--bg-fill-color);
+}
+
+.food {
+  background-color: var(--food-color);
 }/*# sourceMappingURL=style.css.map */

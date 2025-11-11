@@ -43,12 +43,6 @@ for (let row = 0; row < rows; row++) {
 }
 
 function render() {
-  snake.forEach((segment) => {
-    blocks[`${segment.x}-${segment.y}`].classList.add("fill");
-  });
-}
-
-intervalId = setInterval(() => {
   let head = null;
 
   if (direction === "left") {
@@ -73,6 +67,22 @@ intervalId = setInterval(() => {
   snake.unshift(head);
   snake.pop();
 
+  if (food.x === head.x && food.y === head.y) {
+    snake.unshift(head);
+    blocks[`${food.x}-${food.y}`].classList.remove("food");
+    food = {
+      x: Math.floor(Math.random() * rows),
+      y: Math.floor(Math.random() * cols),
+    };
+  }
+
+  snake.forEach((segment) => {
+    blocks[`${segment.x}-${segment.y}`].classList.add("fill");
+    blocks[`${food.x}-${food.y}`].classList.add("food");
+  });
+}
+
+intervalId = setInterval(() => {
   render();
 }, 400);
 
