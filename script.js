@@ -22,7 +22,7 @@ let timerIntervalId = null;
 
 let highScore = localStorage.getItem("highScore") || 0;
 let score = 0;
-let time = "00 : 00";
+let time = "0 : 0";
 
 highScoreElement.innerText = highScore;
 
@@ -31,22 +31,12 @@ let food = {
   y: Math.floor(Math.random() * cols),
 };
 
-console.log(food);
-
 const blocks = [];
 let snake = [
   {
     x: 1,
     y: 2,
   },
-  // {
-  //   x: 9,
-  //   y: 5,
-  // },
-  // {
-  //   x: 9,
-  //   y: 5,
-  // },
 ];
 
 let direction = "down";
@@ -56,7 +46,7 @@ for (let row = 0; row < rows; row++) {
     const block = document.createElement("div");
     block.classList.add("block");
     board.appendChild(block);
-    block.innerText = `${row}-${col}`;
+    // block.innerText = `${row}-${col}`;
     blocks[`${row}-${col}`] = block;
   }
 }
@@ -147,7 +137,7 @@ function restartGame() {
   modal.style.display = "none";
 
   score = 0;
-  time = "00-00";
+  time = "0 : 0";
 
   scoreElement.innerHTML = score;
   highScoreElement.innerText = highScore;

@@ -49,7 +49,6 @@ section {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: rgb(17, 17, 79);
   gap: var(--space-xl);
 }
 section .infos {
@@ -70,6 +69,7 @@ section .board {
 }
 section .board .block {
   border: 1px solid var(--border-primary-color);
+  border-radius: 50%;
 }
 
 .fill {
