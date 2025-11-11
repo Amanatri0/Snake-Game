@@ -13,7 +13,18 @@ const gameOverModal = document.querySelector(".gameOver");
 const cols = Math.floor(board.clientWidth / blockWidth);
 const rows = Math.floor(board.clientHeight / blockHeight);
 
+const highScoreElement = document.querySelector("#highScore");
+const scoreElement = document.querySelector("#score");
+const timeElement = document.querySelector("#time");
+
 let intervalId = null;
+let timerIntervalId = null;
+
+let highScore = localStorage.getItem("highScore") || 0;
+let score = 0;
+let time = "00 : 00";
+
+highScoreElement.innerText = highScore;
 
 let food = {
   x: Math.floor(Math.random() * rows),
@@ -25,8 +36,8 @@ console.log(food);
 const blocks = [];
 let snake = [
   {
-    x: 9,
-    y: 5,
+    x: 1,
+    y: 2,
   },
   // {
   //   x: 9,
@@ -38,7 +49,7 @@ let snake = [
   // },
 ];
 
-let direction = "up";
+let direction = "down";
 
 for (let row = 0; row < rows; row++) {
   for (let col = 0; col < cols; col++) {
@@ -80,6 +91,8 @@ function render() {
   snake.unshift(head);
   snake.pop();
 
+  // Food Consume Logic
+
   if (food.x === head.x && food.y === head.y) {
     blocks[`${food.x}-${food.y}`].classList.remove("food");
     food = {
@@ -88,6 +101,14 @@ function render() {
     };
     blocks[`${food.x}-${food.y}`].classList.add("food");
     snake.unshift(head);
+
+    score += 10;
+    scoreElement.innerHTML = score;
+
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("highScore", highScore.toString());
+    }
   }
 
   snake.forEach((segment) => {
@@ -100,6 +121,19 @@ startButton.addEventListener("click", () => {
   intervalId = setInterval(() => {
     render();
   }, 300);
+
+  timerIntervalId = setInterval(() => {
+    let [min, sec] = time.split(":").map(Number);
+    if (sec == 59) {
+      min += 1;
+      sec = 0;
+    } else {
+      sec += 1;
+    }
+
+    time = `${min} : ${sec}`;
+    timeElement.innerText = time;
+  }, 1000);
 });
 
 restartButton.addEventListener("click", restartGame);
@@ -112,11 +146,18 @@ function restartGame() {
 
   modal.style.display = "none";
 
+  score = 0;
+  time = "00-00";
+
+  scoreElement.innerHTML = score;
+  highScoreElement.innerText = highScore;
+  timeElement.innerHTML = time;
+
   direction = "down";
   snake = [
     {
-      x: 2,
-      y: 5,
+      x: 1,
+      y: 2,
     },
   ];
 
